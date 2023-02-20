@@ -1,0 +1,49 @@
+.header{
+    text-align: center;
+    font-weight: bold;
+    font-size: xx-large;
+    background: bisque;
+    padding: 10px;
+    border-bottom: 1px solid saddlebrown;
+    margin: 0;
+}
+
+.page_body{
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.menucontent{
+    float: left;
+    width: 100%;
+    border-left: 1px solid saddlebrown;
+    border-right: 1px solid saddlebrown;
+    background: antiquewhite;
+}
+
+.menu{
+    float: left;
+    width: calc(20% - 6px);
+    padding: 3px;
+}
+
+.content{
+    float: left;
+    width: calc(80% - 6px);
+    padding: 3px;
+}
+
+.footer{
+    clear: both;
+    text-align: right;
+    font-size: small;
+    background: bisque;
+    padding: 20px;
+    border-top: 1px solid saddlebrown;
+    margin: 0;
+}
+
+body{
+    padding: 0;
+    margin: 0;
+}

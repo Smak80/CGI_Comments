@@ -1,10 +1,31 @@
 #include <iostream>
 #include <fstream>
+#include "cgi.h"
 using namespace std;
 
 const char* TITLE = "Обратная связь";
 const char* HEADER = "Оставьте Ваш комментарий";
 void load_content(const char* template_name);
+
+char* get_user_data()
+{
+	auto fulllen = 0;
+	if (!is_get())
+	{
+		char* data = nullptr;
+		get_form_data(data);
+		char* username = nullptr;
+		char* mail = nullptr;
+		char* comment = nullptr;
+		get_param_value(username, "username", data);
+		get_param_value(mail, "mail", data);
+		get_param_value(comment, "comment", data);
+		save(username, mail, comment);
+	}
+	auto res = new char[1];
+	res[0] = 0;
+	return res;
+}
 
 char* get_menu(const char* menu_filename)
 {
@@ -50,7 +71,8 @@ char* parse(const char* buf)
 	} else if (!strcmp(buf, "<!--content-->"))
 	{
 		load_content("form.htm");
-		res = (char*)"";
+		res = get_user_data();
+		load_comments_from_file();
 	} else
 	{
 		res = new char[strlen(buf) + 1];
@@ -69,9 +91,11 @@ void load_content(const char* template_name)
 		while (!tf.eof())
 		{
 			tf.getline(buf, buf_sz);
-			char* parsed_buf = parse(buf);
-			cout << parsed_buf << endl;
-			delete[] parsed_buf;
+			if (strlen(buf)>0) {
+				char* parsed_buf = parse(buf);
+				cout << parsed_buf << endl;
+				delete[] parsed_buf;
+			}
 		}
 		delete[] buf;
 		tf.close();
